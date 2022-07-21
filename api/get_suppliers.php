@@ -27,10 +27,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 
             mysqli_close($db);
-
-
-            
-
 }
 
 ?>
