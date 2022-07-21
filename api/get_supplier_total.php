@@ -7,13 +7,14 @@ switch($method){
     case 'GET':
 
 
-        $sql="SELECT 
-        MIN(CASE WHEN bidding.FK_itemId THEN CONCAT(bidding.unitCost, ' - ', supplier.supplierName) END), 
-        bidding.unitCost*item.quantity as 'Total' 
+        $sql="SELECT Name, SUM(Total) as Total 
+        FROM ( SELECT 
+        MIN(CASE WHEN bidding.FK_itemId THEN CONCAT(bidding.unitCost, ' - ', supplier.supplierName) END) as 'Cost', 
+        supplier.supplierName as 'Name', bidding.unitCost*item.quantity as 'Total' 
         FROM bidding 
         LEFT JOIN item ON bidding.FK_itemId = item.PK_itemId 
-        LEFT JOIN supplier on bidding.FK_supplierId = supplier.PK_supplierId WHERE bidding.dateAdded = ? 
-        GROUP BY item.itemDesc ORDER BY bidding.FK_itemId;";
+        LEFT JOIN supplier on bidding.FK_supplierId = supplier.PK_supplierId 
+        WHERE bidding.dateAdded = ? GROUP BY item.itemDesc ORDER BY bidding.FK_itemId )T GROUP by Name";
 
         $stmt=$db->prepare($sql);
         $stmt->bind_param('s', $_GET['dateSelected']);
