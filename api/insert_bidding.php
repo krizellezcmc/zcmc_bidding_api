@@ -32,8 +32,12 @@ $method = $_SERVER['REQUEST_METHOD'];
 
                         if($bidding->execute()){
                             $data = ['status' => 1, 'message' => "Success bidding entry"];
+                        }else {
+                            $data = ['status' => 0, 'message' => "Failed bidding entry"];
+                        }
+                    }
 
-                            $object = array_reduce($supplierDetails, function($a, $b){
+                    $object = array_reduce($supplierDetails, function($a, $b){
                                 return $a->unitCost < $b->unitCost ? $a : $b;
                             }, array_shift($supplierDetails));
 
@@ -44,15 +48,10 @@ $method = $_SERVER['REQUEST_METHOD'];
                             $winner->bind_param("siid", $item, $qty, $wSupplierId, $wUnitCost);
 
                             if($winner->execute()) {
-                                $data = ['status' => 0, 'message' => "Failed winner insert"];
+                                $data = ['status' => 1, 'message' => "Success"];
                             } else {
                                 $data = ['status' => 0, 'message' => "Failed winner insert"];
                             }
-
-                        }else {
-                            $data = ['status' => 0, 'message' => "Failed bidding entry"];
-                        }
-                    }
                 } else {
                     $data = ['status' => 0, 'message' => "Failed"];
                 }
