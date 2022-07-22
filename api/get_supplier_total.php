@@ -7,22 +7,20 @@ switch($method){
     case 'GET':
 
 
-        $sql="SELECT Name, SUM(Total) as Total 
-        FROM ( SELECT 
-        MIN(CASE WHEN bidding.FK_itemId THEN CONCAT(bidding.unitCost, ' - ', supplier.supplierName) END) as 'Cost', 
-        supplier.supplierName as 'Name', bidding.unitCost*item.quantity as 'Total' 
-        FROM bidding 
-        LEFT JOIN item ON bidding.FK_itemId = item.PK_itemId 
-        LEFT JOIN supplier on bidding.FK_supplierId = supplier.PK_supplierId 
-        WHERE bidding.dateAdded = ? GROUP BY item.itemDesc ORDER BY bidding.FK_itemId )T GROUP by Name";
+        $sql="SELECT 
+                winners.FK_supplierId, supplier.supplierName, SUM(winners.wQuantity*winners.wCost) 
+                AS totalCost FROM winners 
+                INNER JOIN supplier 
+                ON winners.FK_supplierId=supplier.PK_supplierId
+                WHERE winners.dateAdded = ? 
+                GROUP BY supplier.supplierName";
 
         $stmt=$db->prepare($sql);
         $stmt->bind_param('s', $_GET['dateSelected']);
+
         $stmt->execute();
 
         $supplierTotal=$stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-        
-        $supplier=array();
 
         echo json_encode($supplierTotal);
 
