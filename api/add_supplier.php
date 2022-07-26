@@ -26,10 +26,10 @@ switch($method){
         } else{
             $data=['status'=>0, 'message' => "Failed to create item."];
         }
+
         echo json_encode($data);
         break;
 
-        mysqli_close($db);
 }
 
 ?>

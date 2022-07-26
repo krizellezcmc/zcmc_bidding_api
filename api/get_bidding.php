@@ -49,12 +49,9 @@ $method = $_SERVER['REQUEST_METHOD'];
                 if($getBidding->execute()){
 
                     $result = $getBidding->get_result();
-
-                $all = $result->fetch_all();
-                
-                
-                echo json_encode($all);
-
+                    $all = $result->fetch_all();
+                    
+                    echo json_encode($all);
 
                 }
             } else {

@@ -11,8 +11,8 @@ $method = $_SERVER['REQUEST_METHOD'];
 
             $stmt->bind_param('s', $_GET['dateSelected']);
             $stmt->execute();
-            $supplierTotal=$stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $supplierDetails=$stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-            echo json_encode($supplierTotal);
+            echo json_encode($supplierDetails);
             break;
 }
