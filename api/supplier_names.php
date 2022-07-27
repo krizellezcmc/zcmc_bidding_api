@@ -22,17 +22,10 @@ $method = $_SERVER['REQUEST_METHOD'];
             } else {
                $response = ["No supplier added"];
             }
-         
-            // if(mysqli_num_rows($result) > 0) {
-            //     while($list = $result->fetch_assoc()) {
-            //          $response= $list;  
-            //          echo json_encode($response);
-            //     } 
-            // } else {
-                echo json_encode($response);
-            // }
-            break;
-           
+
+
+            echo json_encode($response);
+            break;       
 }
 
 ?>

@@ -14,7 +14,6 @@ $method = $_SERVER['REQUEST_METHOD'];
             $count = $row->get_result();
             $count_row = $count->fetch_row();
 
-
             // GET SUPPLIER DATA
             $stmt = $db->prepare("SELECT FK_supplierId from bidding where dateAdded = ? GROUP BY FK_supplierId ORDER BY FK_supplierId");
             $stmt->bind_param('s', $_GET['dateSelected']);
@@ -23,13 +22,12 @@ $method = $_SERVER['REQUEST_METHOD'];
             // QUERY START
             $query = 'SELECT ' ;
             
-            
             if( $count_row[0] !== 0){
                                       
                 while ($data = $result->fetch_assoc()) {
 
                     $supplierId[] = $data['FK_supplierId'];
-                    
+                        
                 }
                     for($i = 0; $i < ($count_row[0] ); $i++){
                             
