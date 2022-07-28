@@ -21,8 +21,8 @@ $method = $_SERVER['REQUEST_METHOD'];
                         $supplierId = $val->supplierId;
                         $unitCost = $val->unitCost;
 
-                        $bidding = $db->prepare("UPDATE bidding SET FK_supplierId = ?, unitCost = ? WHERE FK_supplierId = ?");
-                        $bidding->bind_param("idi", $supplierId, $unitCost, $supplierId);
+                        $bidding = $db->prepare("UPDATE bidding SET FK_supplierId = ?, unitCost = ? WHERE FK_supplierId = ? AND FK_itemId = ?");
+                        $bidding->bind_param("idii", $supplierId, $unitCost, $supplierId, $itemId);
 
                         if($bidding->execute()){
                             $data = ['status' => 1, 'message' => "Success edit"];
