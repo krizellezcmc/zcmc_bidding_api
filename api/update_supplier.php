@@ -21,11 +21,11 @@ switch($method){
         $stmt->bind_param('sssssi', $supplier, $contactType, $contact, $contactPerson, $address, $supplierId);
 
         if($stmt->execute()) {
-            $response = ['status' => 1, 'message' => 'Record updated successfully.'];
+            $data = ['status' => 1, 'message' => 'Record updated successfully.'];
         } else {
-            $response = ['status' => 0, 'message' => 'Failed to update record.'];
+            $data = ['status' => 0, 'message' => 'Failed to update record.'];
         }
-        echo json_encode($response);
+        echo json_encode($data);
 
         break;
 
